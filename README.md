@@ -14,8 +14,6 @@
   void test_func();
 
   int main() {
-    uint_fast64_t i = 10000;
-
     start(test_func, 100, 0, true);
     getchar();
     stop();
