@@ -7,7 +7,7 @@ double EXECUTE_DURATION;
 bool IS_PRINT;
 void (*F_TO_CALL)();
 
-void* function_connected_to_timer(PVOID lpParameter, BOOLEAN timerOrWaitFired, void* f) {
+void* function_connected_to_timer(PVOID lpParameter, BOOLEAN timerOrWaitFired) {
     F_TO_CALL();
     COUNTER++;
 }
