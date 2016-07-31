@@ -2,7 +2,7 @@
 ## What is cwi?
 <i>cwi - call with interval</i>. You can call functions with specified interval in your C-code.
 ##Try it out
-1. Download [click] filec `cwi.h` and `cwi.c`
+1. Download [click](https://github.com/hitryy/cwi) files `cwi.h` and `cwi.c`
 2. Put `cwi.h` and `cwi.c` in your project's folder
 3. Include header file `#include 'cwi.h'`
 4. Start using cwi:
