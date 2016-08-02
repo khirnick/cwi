@@ -1,18 +1,32 @@
 #include "cwi.h"
 
-HANDLE TIMER_HANDLE;
-clock_t START_CLOCK;
-uint64_t COUNTER;
-double EXECUTE_DURATION;
-bool IS_PRINT;
-void (*F_TO_CALL)();
+static HANDLE TIMER_HANDLE;
+static clock_t START_CLOCK;
+static uint64_t COUNTER;
+static double EXECUTE_DURATION;
+static bool IS_PRINT;
+static void (*F_TO_CALL)();
 
-void* function_connected_to_timer(PVOID lpParameter, BOOLEAN timerOrWaitFired) {
-    F_TO_CALL();
+void void_default_function() {
+    return;
+}
+
+void set_variables_initial_values() {
+    TIMER_HANDLE        = 0;
+    START_CLOCK         = 0;
+    COUNTER             = 0;
+    EXECUTE_DURATION    = 0;
+    IS_PRINT            = false;
+    F_TO_CALL           = void_default_function;
+}
+
+void* function_connected_to_timer(void* f_to_call(), bool TimerOrWaitFired) {
+    f_to_call();
     COUNTER++;
 }
 
 void start(void* f, short frequency, uint64_t duration, bool is_print) {
+    set_variables_initial_values(); 
     IS_PRINT = is_print;
     set_calling_function(f);
     start_execution(frequency, duration);
@@ -33,7 +47,7 @@ void set_calling_function(void *f) {
 void start_execution(short frequency, uint64_t duration) {
     START_CLOCK = clock();
 
-    CreateTimerQueueTimer(&TIMER_HANDLE, NULL, function_connected_to_timer, NULL, 0, frequency, WT_EXECUTEDEFAULT);
+    CreateTimerQueueTimer(&TIMER_HANDLE, NULL, function_connected_to_timer, F_TO_CALL, 0, frequency, WT_EXECUTEDEFAULT);
 
     if (duration > 0) {
         sleeping_with_duration(START_CLOCK, duration);
